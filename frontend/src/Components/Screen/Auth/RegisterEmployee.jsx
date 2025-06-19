@@ -5,6 +5,7 @@ import { RegisterAsEmployee } from '../../../Redux/Actions/AuthAction';
 
 const RegisterEmployee = () => {
     const [show, setShow] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
     const [employee_id, setEmployee_id] = useState('');
     const [employee_name, setEmployee_name] = useState('');
     const [employee_designation, setEmployee_designation] = useState('');
@@ -12,20 +13,22 @@ const RegisterEmployee = () => {
     const [employee_location, setEmployee_location] = useState('');
     const [employee_email, setEmployee_email] = useState('');
     const [employee_password, setEmployee_password] = useState('');
+    const [confirm_password, setConfirm_password] = useState('');
 
     const toast = useToast();
 
-    // Hide and unhide password
     const handlePasswordShow = () => {
         setShow(!show);
     }
 
-    // Dispatch hook
+    const handleConfirmPasswordShow = () => {
+        setShowConfirm(!showConfirm);
+    }
+
     const dispatch = useDispatch();
 
-    // Handle form submission
     const submitSignUpForm = () => {
-        if (!employee_id || !employee_name || !employee_designation || !employee_department || !employee_location || !employee_email || !employee_password) {
+        if (!employee_id || !employee_name || !employee_designation || !employee_department || !employee_location || !employee_email || !employee_password || !confirm_password) {
             toast({
                 title: "Incomplete Form",
                 description: "Please fill in all the fields.",
@@ -35,10 +38,21 @@ const RegisterEmployee = () => {
             });
             return;
         }
+
+        if (employee_password !== confirm_password) {
+            toast({
+                title: "Password Mismatch",
+                description: "Passwords do not match.",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+            return;
+        }
+
         dispatch(RegisterAsEmployee(employee_id, employee_name, employee_designation, employee_department, employee_location, employee_password, employee_email));
     }
 
-    // Fetching registration status and errors from Redux store
     const { loading, user: registerUser, isRegistered, error } = useSelector((state) => state.registerUser);
 
     useEffect(() => {
@@ -109,6 +123,18 @@ const RegisterEmployee = () => {
                         <InputRightElement width="4.5rem">
                             <Button h="1.75rem" size="sm" onClick={handlePasswordShow}>
                                 {show ? 'Hide' : 'Show'}
+                            </Button>
+                        </InputRightElement>
+                    </InputGroup>
+                </FormControl>
+
+                <FormControl id="confirm_password" isRequired>
+                    <FormLabel>Re-enter Password</FormLabel>
+                    <InputGroup mb="2px">
+                        <Input mb="1rem" type={showConfirm ? 'text' : 'password'} placeholder="Re-enter Your Password" onChange={(e) => setConfirm_password(e.target.value)} />
+                        <InputRightElement width="4.5rem">
+                            <Button h="1.75rem" size="sm" onClick={handleConfirmPasswordShow}>
+                                {showConfirm ? 'Hide' : 'Show'}
                             </Button>
                         </InputRightElement>
                     </InputGroup>
