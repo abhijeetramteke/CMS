@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
+    "file-saver": "^2.0.5",
     "framer-motion": "^11.3.2",
     "moment": "^2.30.1",
     "react": "^18.3.1",
@@ -32,7 +33,8 @@
     "reselect": "^5.1.1",
     "svg-captcha": "^1.4.0",
     "victory": "^37.0.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -58,7 +60,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.240.159:6050",
+  "proxy": "http://172.16.20.124:6050",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "keywords": [],

@@ -22,7 +22,7 @@ const AdminStats = () => {
 
 
     // logout User:-
-    const { loading, user: lu, isLoggedIn, error } = useSelector((state) => state.loginAdmin || {});
+    const { user: lu } = useSelector((state) => state.login || {});
 
     const toast = useToast()
     const dispatch = useDispatch();
@@ -48,10 +48,9 @@ const AdminStats = () => {
     }, [isLoggedOut]);
 
   const today = moment().format('MMMM D, YYYY');
-  const userName = 'Admin'; // Replace with dynamic username if available
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const {allEmployeeComplaints, setAllEmployeeComplaints} = useContext(AdminContext);
+  const {allEmployeeComplaints} = useContext(AdminContext);
 
   const len1 = allEmployeeComplaints.filter((com)=> com.status == 'Opened').length
    const len2 = allEmployeeComplaints.filter((com)=> com.status == 'Processing').length
